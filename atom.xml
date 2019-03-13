@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>SmartAndStupid</title>
+  
+  <subtitle>Study hard and make progress every day</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2019-03-13T14:40:47.974Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>dunkboy</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>java8_lambda</title>
+    <link href="http://yoursite.com/2019/03/13/java8-lambda/"/>
+    <id>http://yoursite.com/2019/03/13/java8-lambda/</id>
+    <published>2019-03-13T11:06:48.000Z</published>
+    <updated>2019-03-13T14:40:47.974Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Optional"><a href="#Optional" class="headerlink" title="Optional"></a>Optional</h1><p>  Optional的三种构造方式:Optional.of(obj),Optional.ofNullable(obj)和明确的Optional.empty()，java8使用Optional优雅的判断空指针，8之前我们判断各种空指针大部分会这样写：</p><pre><code> User user = userDao.selectById(id);        if (ObjectUtils.isEmpty(user))        {            throw new RuntimeException(&quot;用户不存在！&quot;);        }        else         {            if(StringUtils.isEmpty(user.getName))            {                throw new RuntimeException(&quot;用户名为空！&quot;);                }        }</code></pre><p>但是现在我们可以像这样写：</p><pre><code>Optional.ofNullable(userDao.selectByName(name)).map(n -&gt; {    throw new BusinessException(&quot;用户名已经存在！&quot;);}).orElseGet(()-&gt; userDao.insert(user)); Optional.ofNullable(userDao.selectById(id)).map(u -&gt; u.getName()).            map(name -&gt; name.toUpperCase()).            orElseThrow(()-&gt; new BusinessException(&quot;用户不存在！或用户名为空！&quot;)); </code></pre><p>而Optional.of(obj)和Optional.ofNullable(obj)从字面意思就很好理解，ofNullable允许空值，of不允许空值立刻抛出NullPointerException，大多数情况下是使用ofNullable来操作，但是像这种Optional.of(new User()),Optional.of(“常量”)明确不为空的就直接使用of,或者要为obj断言不为null时。这里关于java8的Optional只是做了简单的描述，更多技巧和使用还得查看API和源码，重点可以关注几个函数（map，orElse，orElseGet，filter，flatMap，orElseThrow，ifPresent），构造就不说了。<br>有些数据库JPA的标准，查询的时候是直接返回Optional<t>来处理的，总之Optional的出现还是给java带来了不一样的体验。</t></p>]]></content>
+    
+    <summary type="html">
+    
+      java8出来这么久了还是学习一下，持续更新中·····
+    
+    </summary>
+    
+      <category term="java" scheme="http://yoursite.com/categories/java/"/>
+    
+      <category term="lambda" scheme="http://yoursite.com/categories/java/lambda/"/>
+    
+    
+      <category term="lambda" scheme="http://yoursite.com/tags/lambda/"/>
+    
+      <category term="java8" scheme="http://yoursite.com/tags/java8/"/>
+    
+  </entry>
+  
+</feed>

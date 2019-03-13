@@ -5,7 +5,7 @@
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
     <title>
         
-            SmartAndStupid
+            java8_lambda
         
     </title>
     <link rel="icon" href="/img/favicon.png">
@@ -102,15 +102,13 @@
     </nav>
 </header>
     <main class="main">
-        <section class="posts">
-    
         <article class="post">
             <h1>
                 <a class="title" href="/2019/03/13/java8-lambda/"> 
                     java8_lambda 
                 </a>
             </h1>
-                        <div class="meta">
+            <div class="meta">
                 <a class="date"> 
                     <i class="fa fa-calendar" aria-hidden="true"></i>                    
                     2019-03-13   
@@ -128,20 +126,110 @@
                 
                     <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/java8/">java8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lambda/">lambda</a></li></ul>
             </div>
+<div class="toc">
+  <ol class="toc-list"><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#Optional"><span class="toc-list-text">Optional</span></a></li></ol>
+</div>
             <div class="content">
-                
-                java8出来这么久了还是学习一下，持续更新中·····
-                
-            </div>
-            <div class="continue">
-            <a href="/2019/03/13/java8-lambda/">
-            继续阅读            <i class="fa fa-angle-right" aria-hidden="true"></i>
-            </a>
-            </div>
-        </article>
-        
-</section>
+                <h1 id="Optional"><a href="#Optional" class="headerlink" title="Optional"></a>Optional</h1><p>  Optional的三种构造方式:Optional.of(obj),Optional.ofNullable(obj)和明确的Optional.empty()，java8使用Optional优雅的判断空指针，8之前我们判断各种空指针大部分会这样写：</p>
+<pre><code> User user = userDao.selectById(id);
+        if (ObjectUtils.isEmpty(user))
+        {
+            throw new RuntimeException(&quot;用户不存在！&quot;);
+        }
+        else 
+        {
+            if(StringUtils.isEmpty(user.getName))
+            {
+                throw new RuntimeException(&quot;用户名为空！&quot;);    
+            }
+        }
+</code></pre><p>但是现在我们可以像这样写：</p>
+<pre><code>Optional.ofNullable(userDao.selectByName(name)).map(n -&gt; {
+    throw new BusinessException(&quot;用户名已经存在！&quot;);
+}).orElseGet(()-&gt; userDao.insert(user)); 
 
+Optional.ofNullable(userDao.selectById(id)).map(u -&gt; u.getName()).
+            map(name -&gt; name.toUpperCase()).
+            orElseThrow(()-&gt; new BusinessException(&quot;用户不存在！或用户名为空！&quot;)); 
+</code></pre><p>而Optional.of(obj)和Optional.ofNullable(obj)从字面意思就很好理解，ofNullable允许空值，of不允许空值立刻抛出NullPointerException，大多数情况下是使用ofNullable来操作，但是像这种Optional.of(new User()),Optional.of(“常量”)明确不为空的就直接使用of,或者要为obj断言不为null时。这里关于java8的Optional只是做了简单的描述，更多技巧和使用还得查看API和源码，重点可以关注几个函数（map，orElse，orElseGet，filter，flatMap，orElseThrow，ifPresent），构造就不说了。<br>有些数据库JPA的标准，查询的时候是直接返回Optional<t>来处理的，总之Optional的出现还是给java带来了不一样的体验。</t></p>
+
+            </div>
+          
+           
+                       <div class="copyright">
+                <div class="name">
+                    <a>原文作者:</a>
+                    <a>dunkboy</a>
+                </div>
+                <div class="link">
+                    <a>转载来源:</a>
+                    <a class="permalink" href="https://dunkboy.github.io" target="_blank">https://dunkboy.github.io</a>
+                </div>
+            </div>
+           
+
+          
+
+
+</article>
+
+
+<div class="tip">
+<button class="tip-btn">
+    打赏
+</button>
+<div class="tip-img">
+<ul>
+    
+<li>
+    <img src="/img/qrcode.jpeg">
+</li>
+
+ 
+<li>
+    <img src="/img/qrcode.jpeg">
+</li>
+
+</ul>
+</div>
+</div>
+
+<div class="more">
+
+<div></div>
+
+</div>
+
+<div class="bdsharebuttonbox">
+<a href="#" class="bds_weixin fa fa-weixin" data-cmd="weixin" title="分享到微信" style="color:#1cbd8f">
+</a>
+<a href="#" class="bds_tsina fa fa-weibo" data-cmd="tsina" title="分享到新浪微博" style="color:#ff6363">
+</a>
+<a href="#" class="bds_twi fa fa-twitter" data-cmd="twi" title="分享到Twitter" style="color:#00A7EB">
+</a>
+<a href="#" class="bds_fbook fa fa-facebook" data-cmd="fbook" title="分享到Facebook" style="color:#00A7EB">
+</a>
+</div>
+<script>
+window._bd_share_config={
+    "common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"16"},
+    "share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='../../../../../static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+ 
+<div id="comments"></div>
+
+<script>
+    var gitment = new Gitment({
+    id: "Wed Mar 13 2019 19:06:48 GMT+0800",
+    owner: "dunkboy",
+    repo: "",
+    oauth: {
+      client_id:"",
+      client_secret: "",
+    }
+  })
+  gitment.render('comments')
+</script>
     </main>
     <a class="not-found">not found!</a>
     <div class="search-items">
